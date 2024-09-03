@@ -1,0 +1,47 @@
+from abc import ABC, abstractmethod
+
+# Antarmuka dasar untuk semua printer
+class Printer(ABC):
+    @abstractmethod
+    def print_document(self, document: str) -> None:
+        pass    
+
+# Antarmuka spesifik untuk printer yang memiliki fitur scan
+class Scanner(ABC):
+    @abstractmethod
+    def scan_document(self) -> str:
+        pass
+
+# Antarmuka spesifik untuk printer yang memiliki fitur fax
+class FaxMachine(ABC):
+    @abstractmethod
+    def send_fax(self, document: str) -> None:
+        pass
+
+# Implementasi kelas untuk printer yang hanya bisa print
+class SimplePrinter(Printer):
+    def print_document(self, document: str) -> None:
+        print(f"Printing document: {document}")
+
+# Implementasi kelas untuk printer multifungsi yang bisa print, scan, dan fax
+class MultiFunctionPrinter(Printer, Scanner, FaxMachine):
+    def print_document(self, document: str) -> None:
+        print(f"Printing document: {document}")
+
+    def scan_document(self) -> str:
+        scanned_data = "Scanned document content"
+        print(f"Scanning document...")
+        return scanned_data
+
+    def send_fax(self, document: str) -> None:
+        print(f"Sending fax: {document}")
+
+# Penggunaan kelas SimplePrinter
+simple_printer = SimplePrinter()
+simple_printer.print_document("Simple document")
+
+# Penggunaan kelas MultiFunctionPrinter
+multi_printer = MultiFunctionPrinter()
+multi_printer.print_document("Multifunction document")
+scanned_content = multi_printer.scan_document()
+multi_printer.send_fax(scanned_content)
